@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Danh sách thí sinh</title>
+
+    <!-- Bootstrap Core CSS -->
+
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/static/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/static/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <%- include ../layout/nav.ejs %>
+            <div id="page-wrapper" style="min-height: 355px;">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Danh sách sinh viên</h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                Thí sinh
+                               
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="dataTables_length" id="dataTables-example_length">
+                                                <label>Hiển thị
+                                                    <select onclick="filter(<%=data.products.length%>);"  id="selected" name="dataTables-example_length" aria-controls="dataTables-example"
+                                                        class="form-control input-sm">
+                                                        <option value="-1">Tất cả</option>
+                                                        <option  value="1">Đã thi</option>
+                                                        <option   value="0">Chưa thi</option>
+                                                    </select> </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div id="dataTables-example_filter" class="dataTables_filter">
+                                                <label>Search:
+                                                    <input type="search" class="form-control input-sm" placeholder=""
+                                                        aria-controls="dataTables-example">
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                                <a href="/admin/addStudent" style = "float:right; margin-bottom:10px;"class="btn btn-success">Thêm</a>
+                                        </div>
+                                        
+                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table width="100%" class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline"
+                                                id="dataTables-example" role="grid" aria-describedby="dataTables-example_info"
+                                                style="width: 100%;">
+                                                <thead>
+                                                    <tr role="row">
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example"
+                                                            rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending"
+                                                            style="width: 30px;">STT</th>
+                                                        <th class="sorting_asc" tabindex="0" aria-controls="dataTables-example"
+                                                            rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending"
+                                                            style="width: 150px;">Họ Tên</th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTables-example"
+                                                            rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending"
+                                                            style="width: 100px;">Lớp </th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTables-example"
+                                                            rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending"
+                                                            style="width: 100px;">Mã sinh viên(s)</th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTables-example"
+                                                            rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending"
+                                                            style="width: 100px;">Số điện thoại</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTables-example"
+                                                            rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending"
+                                                            style="width: 50px;">Điểm</th>
+                                                        <th class="sorting" tabindex="0" aria-controls="dataTables-example"
+                                                            rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending"
+                                                            style="width: 100px;">Ngày sinh</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTables-example"
+                                                            rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending"
+                                                            style="width: 100px;">Thời gian tạo</th>
+                                                            <th class="sorting" tabindex="0" aria-controls="dataTables-example"
+                                                            rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending"
+                                                            style="width: 100px;">Thao tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <%if(data){%>
+                                                    <%for(var i = 0;i < data.products.length; i++){
+                                                        if(i%2==0){
+                                                    %>
+
+                                                    <tr class="gradeA odd warning <%=i%> " role="row">
+                                                      <input id="<%=i%>" type="text" class="hidden" value="<%=data.products[i].score%>">
+                                                      <td><%=i+1%></td>
+                                                        <td class="sorting_1"><%=data.products[i].name%></td>
+                                                        <td><%=data.products[i].class%></td>
+                                                        <td><%=data.products[i].idStudent%></td>
+                                                        <td class="center"><%=data.products[i].phoneNumber%></td>
+                                                        <td class="center"><%=data.products[i].score%></td>
+                                                        <td class="center"><%=data.products[i].birthday%></td>
+                                                        <td class="center"><%=data.products[i].createdAt.getDate()%>/<%=data.products[i].createdAt.getMonth()%>/<%=data.products[i].createdAt.getFullYear()%></td>
+                                                        <td class="center">
+                                                        <a  href="edit/<%= data.products[i].id%>" class="btn btn-info btn-circle"><i class="fa fa-edit"></i></a>
+                                                        <button class="btn btn-danger btn-circle student_delete" student_id="<%= data.products[i]._id%>" > <i class="fa fa-times"></i></button>
+                                                    </tr>
+                                                    <%}else{%>                                                        
+                                                    <tr class="gradeA odd <%=i%> " role="row">
+                                                         <input id="<%=i%>" type="text" class="hidden" value="<%=data.products[i].score%>">
+                                                        <td><%=i+1%></td>
+                                                        <td class="sorting_1"><%=data.products[i].name%></td>
+                                                        <td><%=data.products[i].class%></td>
+                                                        <td><%=data.products[i].idStudent%></td>
+                                                        <td class="center"><%=data.products[i].phoneNumber%></td>
+                                                        <td class="center"><%=data.products[i].score%></td>
+                                                        <td class="center"><%=data.products[i].birthday%></td>
+                                                        <td class="center"><%=data.products[i].createdAt.getDate()%>/<%=data.products[i].createdAt.getMonth()%>/<%=data.products[i].createdAt.getFullYear()%></td>
+                                                        <td class="center">
+                                                                
+                                                        <a href="edit/<%= data.products[i].id%>"class="btn btn-info btn-circle"><i class="fa fa-edit"></i></a>
+                                                        <button  class="btn btn-danger btn-circle student_delete" student_id="<%= data.products[i]._id%>" > <i class="fa fa-times"></i></button>
+                                                           
+                                                    </tr>
+                                                    <%}}%>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="dataTables_info" id="dataTables-example_info" role="status" aria-live="polite">Trang <%=data.current%>/<%=data.pages%> : <%=data.products.length%> sinh viên.</div>
+                                        </div>
+                                        
+                                        <div class="col-sm-6">
+                                            </div>
+                                            <% if (data.pages > 0) { %>
+                                                <ul class="pagination text-center">
+                                                    <% if (data.current == 1) { %>
+                                                        <li class="disabled"><a>First</a></li>
+                                                    <% } else { %>
+                                                        <li><a href="1">First</a></li>
+                                                    <% } %>
+                                                    <% var i = (Number(data.current) > 5 ? Number(data.current) - 4 : 1) %>
+                                                    <% if (i !== 1) { %>
+                                                        <li class="disabled"><a>...</a></li>
+                                                    <% } %>
+                                                    <% for (; i <= (Number(data.current) + 4) && i <= data.pages; i++) { %>
+                                                        <% if (i == data.current) { %>
+                                                            <li class="active "><a><%= i %></a></li>
+                                                        <% } else { %>
+                                                            <li><a href="<%= i %>"><%= i %></a></li>
+                                                        <% } %>
+                                                        <% if (i == Number(data.current) + 4 && i < data.pages) { %>
+                                                            <li class="disabled"><a>...</a></li>
+                                                        <% } %>
+                                                    <% } %>
+                                                    <% if (data.current == data.pages) { %>
+                                                        <li class="disabled"><a>Last</a></li>
+                                                    <% } else { %>
+                                                        <li><a href="<%= data.pages %>">Last</a></li>
+                                                    <% } %>
+                                                </ul>
+                                            <% } %>
+                                    </div>
+
+                                        </div>
+            
+                                    </div>
+                                </div>
+                                <!-- /.table-responsive -->
+                                
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+               <%}%>
+    </div>
+
+
+    <!-- jQuery -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/static/vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/static/dist/js/sb-admin-2.js"></script>
+    <script src="/static/js/student.js"></script>
+     <script>
+        function filter(length){
+            var value = parseInt(document.getElementById('selected').value);
+            if(value==1){
+                for(var i = 0;i<length;i++){
+                   if(!document.getElementById(i).value){
+                    $("."+i).last().addClass( "hidden" );
+                   }
+                   if(document.getElementById(i).value){
+                    $("."+i).last().removeClass( "hidden" );
+                   }
+                }
+            }else if(value ==0){
+                for(var i = 0;i<length;i++){
+                   if(document.getElementById(i).value){
+                    $("."+i).last().addClass( "hidden" );
+                   }
+                   if(!document.getElementById(i).value){
+                    $("."+i).last().removeClass( "hidden" );
+                   }
+                }
+            }
+            else if(value ==-1){
+               for(var i = 0;i<length;i++){
+                $("."+i).last().removeClass( "hidden" );
+               }
+                }
+        }
+    </script>
+</body>
+
+</html>
